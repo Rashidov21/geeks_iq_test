@@ -1,0 +1,60 @@
+{% extends 'iq_test/base.html' %}
+
+{% block title %}Natijangiz - Geeks Andijan IQ Test{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-b from-emerald-50 to-white py-12 px-4">
+    <div class="max-w-lg mx-auto">
+        <!-- Badge card -->
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden text-center">
+            <div class="p-8 {% if category == 'high' %}bg-gradient-to-br from-amber-400 to-yellow-500{% elif category == 'average' %}bg-gradient-to-br from-slate-300 to-slate-400{% else %}bg-gradient-to-br from-amber-700 to-amber-800{% endif %} text-white">
+                <p class="text-6xl mb-2">{{ badge_emoji }}</p>
+                <h1 class="text-2xl font-bold">{{ badge }} nishoni</h1>
+                <p class="text-white/90 mt-1">{{ result.name }}, tabriklaymiz!</p>
+            </div>
+            <div class="p-8">
+                <div class="text-6xl font-extrabold text-emerald-600 mb-2">{{ result.score }}</div>
+                <p class="text-slate-600 font-medium">IQ ball</p>
+                <p class="text-slate-700 mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                    {{ message }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Top 3 leaderboard preview -->
+        {% if top3 %}
+        <div class="mt-8 bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+            <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                Eng yaxshi 3 ta
+            </h2>
+            <div class="space-y-2">
+                {% for r in top3 %}
+                <div class="flex items-center justify-between p-2 rounded-lg {% if r.id == result.id %}bg-emerald-50 border border-emerald-200{% else %}bg-slate-50{% endif %}">
+                    <span class="font-medium">
+                        {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% else %}🥉{% endif %}
+                        {{ r.name }}
+                    </span>
+                    <span class="font-bold text-emerald-600">{{ r.score }} ball</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Actions -->
+        <div class="mt-8 flex flex-col gap-3">
+            <a href="{% url 'iq_test:student_info' %}" 
+               class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition-colors text-center">
+                Qayta topshirish
+            </a>
+            <a href="{% url 'iq_test:landing' %}" 
+               class="w-full py-3 border-2 border-slate-300 text-slate-700 font-medium rounded-xl hover:bg-slate-50 text-center">
+                Bosh sahifaga
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'iq_test/base.html' %}
+
+{% block title %}Ma'lumotlaringiz - Geeks Andijan IQ Test{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-b from-emerald-50 to-white py-8 px-4">
+    <div class="max-w-lg mx-auto">
+        <!-- Progress -->
+        <div class="mb-8">
+            <div class="flex justify-between text-sm text-slate-600 mb-2">
+                <span>Qadam 1/2</span>
+                <span>Ma'lumotlar</span>
+            </div>
+            <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div class="h-full w-1/2 bg-emerald-500 rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-800">Ma'lumotlaringizni kiriting</h1>
+                    <p class="text-slate-600 text-sm">Ro'yxatdan o'tish shart emas — faqat asosiy ma'lumotlar</p>
+                </div>
+            </div>
+
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <div>
+                    <label for="id_name" class="block font-medium text-slate-700 mb-1">{{ form.name.label }}</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="id_age" class="block font-medium text-slate-700 mb-1">{{ form.age.label }}</label>
+                    {{ form.age }}
+                    {% if form.age.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.age.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-700 mb-2">{{ form.gender.label }}</label>
+                    <div class="flex gap-6">
+                        {% for choice in form.gender.field.choices %}
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="gender" value="{{ choice.0 }}" 
+                                   class="w-4 h-4 text-emerald-600 border-slate-300 focus:ring-emerald-500">
+                            <span>{{ choice.1 }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% if form.gender.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.gender.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="id_phone" class="block font-medium text-slate-700 mb-1">{{ form.phone.label }}</label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.phone.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" 
+                        class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    Testni boshlash
+                </button>
+            </form>
+
+            <a href="{% url 'iq_test:landing' %}" class="block text-center text-slate-500 text-sm mt-4 hover:text-slate-700">
+                ← Orqaga
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
