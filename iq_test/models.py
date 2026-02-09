@@ -1,12 +1,20 @@
 """
 Database models for Geeks Andijan IQ Test.
+Supports: text, Raven's matrices, abstract reasoning, visual puzzles.
 """
 
 from django.db import models
 
 
 class Question(models.Model):
-    """IQ test question with multiple choice answers."""
+    """IQ test question - text, Raven's, abstract, or visual type."""
+
+    QUESTION_TYPE_CHOICES = [
+        ('text', 'Matnli savol'),
+        ('raven', "Raven matritsasi"),
+        ('abstract', 'Abstract reasoning'),
+        ('visual', 'Visual puzzle'),
+    ]
 
     DIFFICULTY_CHOICES = [
         ('easy', 'Oson'),
@@ -14,14 +22,43 @@ class Question(models.Model):
         ('hard', 'Qiyin'),
     ]
 
-    text = models.TextField(verbose_name='Savol matni')
-    option_a = models.CharField(max_length=255)
-    option_b = models.CharField(max_length=255)
-    option_c = models.CharField(max_length=255, blank=True)
-    option_d = models.CharField(max_length=255, blank=True)
+    ANSWER_CHOICES = [
+        ('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D'),
+        ('e', 'E'), ('f', 'F'), ('g', 'G'), ('h', 'H'),
+    ]
+
+    question_type = models.CharField(
+        max_length=20,
+        choices=QUESTION_TYPE_CHOICES,
+        default='text',
+        verbose_name='Savol turi'
+    )
+    text = models.TextField(verbose_name='Savol matni', blank=True)
+    image = models.ImageField(
+        upload_to='questions/',
+        blank=True,
+        null=True,
+        verbose_name='Savol rasmi (Raven/Visual uchun)'
+    )
+    option_a = models.CharField(max_length=500, blank=True)
+    option_b = models.CharField(max_length=500, blank=True)
+    option_c = models.CharField(max_length=500, blank=True)
+    option_d = models.CharField(max_length=500, blank=True)
+    option_e = models.CharField(max_length=500, blank=True)
+    option_f = models.CharField(max_length=500, blank=True)
+    option_g = models.CharField(max_length=500, blank=True)
+    option_h = models.CharField(max_length=500, blank=True)
+    option_a_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_b_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_c_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_d_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_e_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_f_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_g_image = models.ImageField(upload_to='options/', blank=True, null=True)
+    option_h_image = models.ImageField(upload_to='options/', blank=True, null=True)
     correct_answer = models.CharField(
         max_length=1,
-        choices=[('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D')]
+        choices=ANSWER_CHOICES
     )
     difficulty = models.CharField(
         max_length=10,
@@ -36,7 +73,18 @@ class Question(models.Model):
         verbose_name_plural = 'Savollar'
 
     def __str__(self):
-        return self.text[:50] + '...' if len(self.text) > 50 else self.text
+        return self.text[:50] + '...' if self.text and len(self.text) > 50 else (self.text or f'{self.get_question_type_display()} #{self.id}')
+
+    def get_options_list(self):
+        """Return list of (letter, text_or_none, image_or_none) for non-empty options."""
+        letters = 'abcdefgh'
+        result = []
+        for i, letter in enumerate(letters):
+            text = getattr(self, f'option_{letter}', None) or ''
+            img = getattr(self, f'option_{letter}_image', None)
+            if text or (img and img.name):
+                result.append((letter, text.strip() or None, img))
+        return result
 
 
 class UserResult(models.Model):

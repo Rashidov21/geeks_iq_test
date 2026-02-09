@@ -8,7 +8,9 @@ from iq_test.models import Question
 
 
 SAMPLE_QUESTIONS = [
+    # === MATNLISAVOLLAR (text) ===
     {
+        'question_type': 'text',
         'text': '2, 4, 6, 8, ? - Ketma-ketlikda keyingi son qaysi?',
         'option_a': '9',
         'option_b': '10',
@@ -18,6 +20,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': 'Agar barcha gulqo\'ng\'izlar qora va bu hayvon gulqo\'ng\'iz bo\'lsa, bu hayvon qora. Bu qanday xulosa?',
         'option_a': 'Noto\'g\'ri',
         'option_b': 'To\'g\'ri',
@@ -27,6 +30,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '5 + 3 × 2 = ?',
         'option_a': '16',
         'option_b': '11',
@@ -36,6 +40,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': 'Bir haftada necha kun bor?',
         'option_a': '5',
         'option_b': '6',
@@ -45,6 +50,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '1, 1, 2, 3, 5, 8, ? - Fibonachchi ketma-ketligida keyingi son?',
         'option_a': '11',
         'option_b': '12',
@@ -54,6 +60,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'Agar B dan katta, B esa C dan katta bo\'lsa, A C dan qanday?',
         'option_a': 'Kichik',
         'option_b': 'Katta',
@@ -63,6 +70,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': 'OT - 2 harf, KITOB - 5 harf. NIMA - nechta harf?',
         'option_a': '3',
         'option_b': '4',
@@ -72,6 +80,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '3, 6, 12, 24, ? - Keyingi son qaysi?',
         'option_a': '36',
         'option_b': '48',
@@ -81,6 +90,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'Kun botguncha qayerda bo\'ladi?',
         'option_a': 'Sharqda',
         'option_b': 'G\'arbda',
@@ -90,6 +100,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '1, 4, 9, 16, 25, ? - Keyingi son?',
         'option_a': '30',
         'option_b': '32',
@@ -99,6 +110,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'Hammasi odamlar o\'ladi. Sokrates odam. Demak...',
         'option_a': 'Sokrates o\'lmaydi',
         'option_b': 'Sokrates o\'ladi',
@@ -108,6 +120,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '2, 3, 5, 7, 11, ? - Keyingi tub son?',
         'option_a': '12',
         'option_b': '13',
@@ -117,6 +130,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'Agar hamma sigirlar sut beradi va Masha sigir bo\'lmasa, Masha sut beradimi?',
         'option_a': 'Ha',
         'option_b': 'Yo\'q',
@@ -126,6 +140,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'O\'zbekiston poytaxti qayerda?',
         'option_a': 'Samarqand',
         'option_b': 'Buxoro',
@@ -135,6 +150,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': 'A, C, E, G, ? - Keyingi harf?',
         'option_a': 'H',
         'option_b': 'I',
@@ -144,6 +160,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': '10 - 2 × 3 + 4 = ?',
         'option_a': '8',
         'option_b': '28',
@@ -153,6 +170,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'Bir yilda necha oy bor?',
         'option_a': '10',
         'option_b': '11',
@@ -162,6 +180,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '1, 2, 4, 8, 16, ? - Keyingi son?',
         'option_a': '24',
         'option_b': '28',
@@ -171,6 +190,7 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'medium',
     },
     {
+        'question_type': 'text',
         'text': 'Agar bugun payshanba bo\'lsa, 4 kun keyin qaysi kun?',
         'option_a': 'Yakshanba',
         'option_b': 'Dushanba',
@@ -180,12 +200,96 @@ SAMPLE_QUESTIONS = [
         'difficulty': 'easy',
     },
     {
+        'question_type': 'text',
         'text': '5 × (3 + 2) - 4 = ?',
         'option_a': '21',
         'option_b': '19',
         'option_c': '25',
         'option_d': '15',
         'correct_answer': 'a',
+        'difficulty': 'medium',
+    },
+    # === ABSTRACT REASONING ===
+    {
+        'question_type': 'abstract',
+        'text': '◆ ◆ ◆ / ● ● ● / ▲ ▲ ? — Pattern bo\'yicha keyingi belgi qaysi?',
+        'option_a': '▲',
+        'option_b': '◆',
+        'option_c': '●',
+        'option_d': '■',
+        'correct_answer': 'a',
+        'difficulty': 'easy',
+    },
+    {
+        'question_type': 'abstract',
+        'text': '1-1, 2-4, 3-9, 4-16, 5-? — Pattern: ikkinchi son birinchining kvadrati. 5 ga mos qiymat?',
+        'option_a': '20',
+        'option_b': '25',
+        'option_c': '30',
+        'option_d': '15',
+        'correct_answer': 'b',
+        'difficulty': 'medium',
+    },
+    {
+        'question_type': 'abstract',
+        'text': 'Z, Y, X, W, V, ? — Alifbo teskari ketma-ketlikda keyingi harf?',
+        'option_a': 'T',
+        'option_b': 'U',
+        'option_c': 'S',
+        'option_d': 'R',
+        'correct_answer': 'b',
+        'difficulty': 'easy',
+    },
+    {
+        'question_type': 'abstract',
+        'text': '2, 6, 12, 20, 30, ? — Farqlar: +4, +6, +8, +10. Keyingi son?',
+        'option_a': '40',
+        'option_b': '42',
+        'option_c': '44',
+        'option_d': '38',
+        'correct_answer': 'b',
+        'difficulty': 'medium',
+    },
+    # === VISUAL LOGIC PUZZLE (matnli versiya) ===
+    {
+        'question_type': 'visual',
+        'text': '3x3 grid: ▢▢▢ / ▢◆▢ / ▢▢? — Markazda ◆, burchaklarda ▢. Bo\'sh joyga mos shakl?',
+        'option_a': '◆',
+        'option_b': '●',
+        'option_c': '▢',
+        'option_d': '▲',
+        'correct_answer': 'c',
+        'difficulty': 'medium',
+    },
+    {
+        'question_type': 'visual',
+        'text': 'Qatorlar: ODD / EVEN / ODD / ? — Juft-toq pattern. Keyingi so\'z?',
+        'option_a': 'ODD',
+        'option_b': 'EVEN',
+        'option_c': 'MIX',
+        'option_d': 'NUM',
+        'correct_answer': 'b',
+        'difficulty': 'easy',
+    },
+    # === RAVEN MATRITSASI (matnli/symbolik versiya) ===
+    {
+        'question_type': 'raven',
+        'text': "Raven matritsasi: Har qatorda ★ soni o'sadi (1, 2, 3). 3-qatorda bo'sh joyni to'ldiring.",
+        'option_a': '★★★',
+        'option_b': '★★',
+        'option_c': '★',
+        'option_d': '★★★★',
+        'correct_answer': 'a',
+        'difficulty': 'easy',
+    },
+    {
+        'question_type': 'raven',
+        'text': "Matritsa: Har ustunda ■ ◆ ● ketma-ket. Pastki qatorning o'ng pastki joyi bo'sh. To'g'ri variant?",
+        'option_a': '■',
+        'option_b': '◆',
+        'option_c': '●',
+        'option_d': '▲',
+        'correct_answer': 'c',
         'difficulty': 'medium',
     },
 ]
@@ -197,17 +301,23 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         created = 0
         for q_data in SAMPLE_QUESTIONS:
-            _, is_new = Question.objects.get_or_create(
+            defaults = {
+                'question_type': q_data.get('question_type', 'text'),
+                'option_a': q_data.get('option_a', ''),
+                'option_b': q_data.get('option_b', ''),
+                'option_c': q_data.get('option_c', ''),
+                'option_d': q_data.get('option_d', ''),
+                'option_e': q_data.get('option_e', ''),
+                'option_f': q_data.get('option_f', ''),
+                'option_g': q_data.get('option_g', ''),
+                'option_h': q_data.get('option_h', ''),
+                'correct_answer': q_data['correct_answer'],
+                'difficulty': q_data['difficulty'],
+                'is_active': True,
+            }
+            obj, is_new = Question.objects.update_or_create(
                 text=q_data['text'],
-                defaults={
-                    'option_a': q_data['option_a'],
-                    'option_b': q_data['option_b'],
-                    'option_c': q_data['option_c'],
-                    'option_d': q_data['option_d'],
-                    'correct_answer': q_data['correct_answer'],
-                    'difficulty': q_data['difficulty'],
-                    'is_active': True,
-                }
+                defaults=defaults
             )
             if is_new:
                 created += 1

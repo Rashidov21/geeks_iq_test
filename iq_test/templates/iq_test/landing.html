@@ -6,16 +6,13 @@
 <div class="min-h-screen flex flex-col">
     <!-- Hero -->
     <header class="bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <nav class="container mx-auto px-4 py-4 flex justify-center items-center">
             <div class="flex items-center gap-2">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                 </svg>
                 <span class="font-bold text-xl">Geeks Andijan</span>
             </div>
-            <a href="{% url 'iq_test:dashboard' %}" class="text-white/90 hover:text-white text-sm font-medium">
-                O'qituvchi paneli →
-            </a>
         </nav>
 
         <div class="container mx-auto px-4 py-16 md:py-24 text-center">
@@ -34,6 +31,47 @@
             </a>
         </div>
     </header>
+
+    <!-- Statistika - barcha foydalanuvchilar uchun -->
+    <section class="py-12 bg-white border-b border-slate-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-xl font-bold text-center text-slate-800 mb-8">Platforma statistikasi</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
+                <div class="bg-emerald-50 rounded-xl p-4 text-center border border-emerald-100">
+                    <p class="text-3xl font-bold text-emerald-600">{{ total_attempts }}</p>
+                    <p class="text-slate-600 text-sm mt-1">Jami testlar</p>
+                </div>
+                <div class="bg-teal-50 rounded-xl p-4 text-center border border-teal-100">
+                    <p class="text-3xl font-bold text-teal-600">{{ avg_score }}</p>
+                    <p class="text-slate-600 text-sm mt-1">O'rtacha ball</p>
+                </div>
+                <div class="bg-amber-50 rounded-xl p-4 text-center border border-amber-100 col-span-2 md:col-span-1">
+                    <p class="text-3xl font-bold text-amber-600">{% if top_3 %}{{ top_3.0.score }}{% else %}—{% endif %}</p>
+                    <p class="text-slate-600 text-sm mt-1">Eng yaxshi natija</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-200 col-span-2 md:col-span-1">
+                    <p class="text-2xl font-bold text-slate-700">🏆 Top 3</p>
+                    <p class="text-slate-600 text-sm mt-1">Reyting</p>
+                </div>
+            </div>
+            {% if top_3 %}
+            <div class="max-w-md mx-auto">
+                <p class="text-sm font-medium text-slate-600 mb-2 text-center">Eng yaxshi 3 ta natija</p>
+                <div class="flex justify-center gap-4 flex-wrap">
+                    {% for r in top_3 %}
+                    <div class="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
+                        <span class="text-lg">{% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% else %}🥉{% endif %}</span>
+                        <span class="font-medium">{{ r.name }}</span>
+                        <span class="font-bold text-emerald-600">{{ r.score }} ball</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <p class="text-center text-slate-500 text-sm">Birinchilardan bo'lib test topshiring!</p>
+            {% endif %}
+        </div>
+    </section>
 
     <!-- Steps -->
     <section class="container mx-auto px-4 py-16 md:py-24">
@@ -55,7 +93,7 @@
                     </svg>
                 </div>
                 <h3 class="font-bold text-lg mb-2">2. Savollarga javob bering</h3>
-                <p class="text-slate-600">Mantiqiy va oddiy savollarga javob bering. Har bir savol uchun vaqt cheklangan.</p>
+                <p class="text-slate-600">Matnli savollar, Raven matritsalari, abstract reasoning va visual puzzlelar. Har bir savol uchun vaqt cheklangan.</p>
             </div>
             <div class="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center">
                 <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">

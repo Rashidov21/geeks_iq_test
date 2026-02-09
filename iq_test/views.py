@@ -1,18 +1,14 @@
 """
 Views for Geeks Andijan IQ Test.
-Educational MVP - Student and Teacher sides.
+Educational MVP - Barcha foydalanuvchilar uchun umumiy platforma.
 """
 
-import csv
 import json
-from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.http import require_GET, require_POST
-from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Avg, Count
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.db.models import Avg
 from django.utils import timezone
-from openpyxl import Workbook
 
 from .models import Question, UserResult, TestSession
 from .forms import StudentInfoForm
@@ -21,8 +17,15 @@ from .forms import StudentInfoForm
 # ==================== STUDENT SIDE ====================
 
 def landing(request):
-    """Landing page with hero and CTA."""
-    return render(request, 'iq_test/landing.html')
+    """Landing page with hero, stats, and CTA."""
+    total_attempts = UserResult.objects.count()
+    avg_score = UserResult.objects.aggregate(avg=Avg('score'))['avg'] or 0
+    top_3 = UserResult.objects.order_by('-score')[:3]
+    return render(request, 'iq_test/landing.html', {
+        'total_attempts': total_attempts,
+        'avg_score': round(avg_score, 1),
+        'top_3': top_3,
+    })
 
 
 def student_info(request):
@@ -52,12 +55,28 @@ def start_test(request):
 
 
 def get_questions(request):
-    """API: Return active questions as JSON for test."""
-    questions = list(
-        Question.objects.filter(is_active=True).values(
-            'id', 'text', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer'
-        )
-    )
+    """API: Return active questions as JSON for test (text, raven, abstract, visual)."""
+    qs = Question.objects.filter(is_active=True)
+    questions = []
+    for q in qs:
+        opts = []
+        for letter in 'abcdefgh':
+            text = (getattr(q, f'option_{letter}') or '').strip()
+            img = getattr(q, f'option_{letter}_image', None)
+            if text or (img and img.name):
+                opts.append({
+                    'letter': letter,
+                    'text': text or None,
+                    'image': img.url if img and img.name else None,
+                })
+        questions.append({
+            'id': q.id,
+            'question_type': q.question_type,
+            'text': q.text or '',
+            'image': q.image.url if q.image and q.image.name else None,
+            'options': opts,
+            'correct_answer': q.correct_answer,
+        })
     return JsonResponse({'questions': questions})
 
 
@@ -157,105 +176,3 @@ def results(request, result_id=None):
     })
 
 
-# ==================== TEACHER / ADMIN DASHBOARD ====================
-
-def dashboard(request):
-    """Teacher dashboard with analytics and charts."""
-    # Basic stats
-    total_attempts = UserResult.objects.count()
-    avg_score = UserResult.objects.aggregate(avg=Avg('score'))['avg'] or 0
-    last_10 = UserResult.objects.all()[:10]
-    top_3 = UserResult.objects.order_by('-score')[:3]
-    leaderboard = UserResult.objects.order_by('-score')[:20]
-
-    # By age
-    by_age = list(
-        UserResult.objects.values('age')
-        .annotate(avg_score=Avg('score'), count=Count('id'))
-        .order_by('age')
-    )
-    age_labels = [str(x['age']) for x in by_age]
-    age_scores = [round(x['avg_score'] or 0) for x in by_age]
-
-    # By gender
-    by_gender = list(
-        UserResult.objects.values('gender')
-        .annotate(avg_score=Avg('score'), count=Count('id'))
-    )
-    gender_map = {'M': 'Erkak', 'F': 'Ayol'}
-    gender_labels = [gender_map.get(x['gender'], x['gender']) for x in by_gender]
-    gender_scores = [round(x['avg_score'] or 0) for x in by_gender]
-
-    # Score distribution (buckets)
-    buckets = {'0-20': 0, '21-40': 0, '41-60': 0, '61-80': 0, '81-100': 0}
-    for r in UserResult.objects.values_list('score', flat=True):
-        if r <= 20:
-            buckets['0-20'] += 1
-        elif r <= 40:
-            buckets['21-40'] += 1
-        elif r <= 60:
-            buckets['41-60'] += 1
-        elif r <= 80:
-            buckets['61-80'] += 1
-        else:
-            buckets['81-100'] += 1
-
-    dist_labels = list(buckets.keys())
-    dist_values = list(buckets.values())
-
-    return render(request, 'iq_test/dashboard.html', {
-        'total_attempts': total_attempts,
-        'avg_score': round(avg_score, 1),
-        'last_10': last_10,
-        'top_3': top_3,
-        'leaderboard': leaderboard,
-        'age_labels': json.dumps(age_labels),
-        'age_scores': json.dumps(age_scores),
-        'gender_labels': json.dumps(gender_labels),
-        'gender_scores': json.dumps(gender_scores),
-        'dist_labels': json.dumps(dist_labels),
-        'dist_values': json.dumps(dist_values),
-    })
-
-
-def export_csv(request):
-    """Export all results to CSV."""
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="iq_results.csv"'
-    response.write('\ufeff')  # BOM for Excel UTF-8
-
-    writer = csv.writer(response)
-    writer.writerow(['Ism', 'Yosh', 'Jinsi', 'Telefon', 'Ball', 'Sana'])
-
-    gender_map = {'M': 'Erkak', 'F': 'Ayol'}
-    for r in UserResult.objects.all():
-        writer.writerow([
-            r.name, r.age, gender_map.get(r.gender, r.gender),
-            r.phone, r.score, r.created_at.strftime('%Y-%m-%d %H:%M')
-        ])
-
-    return response
-
-
-def export_excel(request):
-    """Export all results to Excel."""
-    wb = Workbook()
-    ws = wb.active
-    ws.title = 'IQ Natijalari'
-
-    headers = ['Ism', 'Yosh', 'Jinsi', 'Telefon', 'Ball', 'Sana']
-    ws.append(headers)
-
-    gender_map = {'M': 'Erkak', 'F': 'Ayol'}
-    for r in UserResult.objects.all():
-        ws.append([
-            r.name, r.age, gender_map.get(r.gender, r.gender),
-            r.phone, r.score, r.created_at.strftime('%Y-%m-%d %H:%M')
-        ])
-
-    response = HttpResponse(
-        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
-    response['Content-Disposition'] = 'attachment; filename="iq_results.xlsx"'
-    wb.save(response)
-    return response

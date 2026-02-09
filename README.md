@@ -9,7 +9,7 @@ Ta'limiy MVP — o'quvchilar uchun oddiy, tez va qulay onlayn IQ test platformas
 - **Ma'lumotlar formasi** — tekshiruv va do'stona xato xabarlari
 - **Test interfeysi** — har bir savol alohida, taymer, progress bar, o'tkazib yuborish
 - **Natijalar** — IQ ball, nishon (Bronza/Kumush/Oltin), reyting
-- **O'qituvchi paneli** — statistika, grafiklar, eksport (CSV, Excel)
+- **Bosh sahifada statistika** — jami testlar, o'rtacha ball, Top 3 reyting (barcha uchun ko'rinadi)
 
 ## Texnologiyalar
 
@@ -38,8 +38,7 @@ python manage.py runserver
 ## Ishlatish
 
 1. **Asosiy sahifa:** http://127.0.0.1:8000/
-2. **O'qituvchi paneli:** http://127.0.0.1:8000/dashboard/
-3. **Admin:** http://127.0.0.1:8000/admin/
+2. **Admin (savollarni boshqarish):** http://127.0.0.1:8000/admin/
 
 ## Savollarni boshqarish
 

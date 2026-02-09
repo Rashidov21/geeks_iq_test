@@ -8,13 +8,33 @@ from .models import Question, UserResult, TestSession
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'text_short', 'difficulty', 'correct_answer', 'is_active']
-    list_filter = ['difficulty', 'is_active']
+    list_display = ['id', 'question_type', 'text_short', 'difficulty', 'correct_answer', 'is_active']
+    list_filter = ['question_type', 'difficulty', 'is_active']
     search_fields = ['text']
     list_editable = ['is_active']
 
+    fieldsets = (
+        (None, {
+            'fields': ('question_type', 'text', 'image', 'correct_answer', 'difficulty', 'is_active')
+        }),
+        ('Matnli variantlar (A-D)', {
+            'fields': ('option_a', 'option_b', 'option_c', 'option_d'),
+            'description': 'Matnli savollar uchun'
+        }),
+        ('Qo\'shimcha variantlar (E-H, Raven uchun)', {
+            'fields': ('option_e', 'option_f', 'option_g', 'option_h'),
+            'classes': ('collapse',)
+        }),
+        ('Rasmli variantlar (Raven/Visual)', {
+            'fields': ('option_a_image', 'option_b_image', 'option_c_image', 'option_d_image',
+                       'option_e_image', 'option_f_image', 'option_g_image', 'option_h_image'),
+            'classes': ('collapse',)
+        }),
+    )
+
     def text_short(self, obj):
-        return obj.text[:60] + '...' if len(obj.text) > 60 else obj.text
+        t = obj.text or obj.get_question_type_display() or ''
+        return (t[:60] + '...') if len(t) > 60 else t
 
     text_short.short_description = 'Savol'
 
