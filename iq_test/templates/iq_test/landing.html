@@ -1,21 +1,18 @@
 {% extends 'iq_test/base.html' %}
+{% load static %}
 
 {% block title %}Geeks Andijan IQ Test - Mantiqiy fikrlashni sinang{% endblock %}
 
-{% block content %}
-<div class="min-h-screen flex flex-col">
-    <!-- Hero -->
-    <header class="bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white">
-        <nav class="container mx-auto px-4 py-4 flex justify-center items-center">
-            <div class="flex items-center gap-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                </svg>
-                <span class="font-bold text-xl">Geeks Andijan</span>
-            </div>
-        </nav>
+{% block header %}
+<header class="bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white shrink-0">
+    <nav class="container mx-auto px-4 py-4 flex justify-center items-center">
+        <a href="{% url 'iq_test:landing' %}" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <img src="{% static 'logo_white_2 (6).png' %}" alt="Geeks Andijan" class="h-10 w-auto">
+            <span class="font-bold text-xl">Geeks Andijan</span>
+        </a>
+    </nav>
 
-        <div class="container mx-auto px-4 py-16 md:py-24 text-center">
+    <div class="container mx-auto px-4 py-16 md:py-24 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
                 IQ Test Onlayn
             </h1>
@@ -31,7 +28,10 @@
             </a>
         </div>
     </header>
+{% endblock %}
 
+{% block content %}
+<div class="min-h-screen flex flex-col">
     <!-- Statistika - barcha foydalanuvchilar uchun -->
     <section class="py-12 bg-white border-b border-slate-100">
         <div class="container mx-auto px-4">
@@ -116,9 +116,5 @@
             </a>
         </div>
     </section>
-
-    <footer class="mt-auto py-8 text-center text-slate-500 text-sm">
-        Geeks Andijan IQ Test © 2025 — Ta'limiy MVP
-    </footer>
 </div>
 {% endblock %}
