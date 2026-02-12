@@ -20,7 +20,7 @@ def landing(request):
     """Landing page with hero, stats, and CTA."""
     total_attempts = UserResult.objects.count()
     avg_score = UserResult.objects.aggregate(avg=Avg('score'))['avg'] or 0
-    top_3 = UserResult.objects.order_by('-score')[:3]
+    top_3 = UserResult.objects.order_by('-score', '-created_at')[:3]
     return render(request, 'iq_test/landing.html', {
         'total_attempts': total_attempts,
         'avg_score': round(avg_score, 1),
@@ -75,7 +75,6 @@ def get_questions(request):
             'text': q.text or '',
             'image': q.image.url if q.image and q.image.name else None,
             'options': opts,
-            'correct_answer': q.correct_answer,
         })
     return JsonResponse({'questions': questions})
 
@@ -93,20 +92,21 @@ def submit_test(request):
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Noto\'g\'ri ma\'lumot'}, status=400)
 
-    # Calculate score (answers keys are question ids as strings)
+    # Calculate score - total = all active questions, unanswered = wrong
+    all_questions = Question.objects.filter(is_active=True)
+    total = all_questions.count()
+    correct = 0
+
     try:
         q_ids = [int(k) for k in answers.keys()]
     except (ValueError, TypeError):
         q_ids = []
-    questions = Question.objects.filter(is_active=True, id__in=q_ids)
-    correct = 0
-    total = questions.count()
 
-    for q in questions:
+    for q in all_questions:
         if str(q.id) in answers and answers[str(q.id)] == q.correct_answer:
             correct += 1
 
-    # Score: 0-100 based on correct/total
+    # Score: 0-100 based on correct/total (skipped = wrong)
     score = round((correct / total * 100)) if total > 0 else 0
 
     # Save result
@@ -117,6 +117,8 @@ def submit_test(request):
         gender=info['gender'],
         phone=info['phone'],
         score=score,
+        correct_count=correct,
+        total_questions=total,
     )
 
     # Optional: create TestSession
@@ -164,7 +166,7 @@ def results(request, result_id=None):
         message = 'Ajoyib! Sizning mantiqiy fikrlash qobiliyatingiz juda yuqori!'
 
     # Top 3 for leaderboard preview
-    top3 = UserResult.objects.order_by('-score')[:3]
+    top3 = UserResult.objects.order_by('-score', '-created_at')[:3]
 
     return render(request, 'iq_test/results.html', {
         'result': result,

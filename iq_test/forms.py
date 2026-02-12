@@ -14,17 +14,17 @@ class StudentInfoForm(forms.ModelForm):
         fields = ['name', 'age', 'gender', 'phone']
         widgets = {
             'name': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition',
+                'class': 'w-full px-4 py-3 rounded-lg bg-white/5 border-2 border-white/20 text-white placeholder-gray-500 focus:border-geeks-green focus:ring-1 focus:ring-geeks-green outline-none transition',
                 'placeholder': 'Ismingizni kiriting'
             }),
             'age': forms.NumberInput(attrs={
-                'class': 'w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition',
+                'class': 'w-full px-4 py-3 rounded-lg bg-white/5 border-2 border-white/20 text-white placeholder-gray-500 focus:border-geeks-green focus:ring-1 focus:ring-geeks-green outline-none transition',
                 'placeholder': 'Yoshingiz',
                 'min': 8,
                 'max': 100
             }),
             'phone': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition',
+                'class': 'w-full px-4 py-3 rounded-lg bg-white/5 border-2 border-white/20 text-white placeholder-gray-500 focus:border-geeks-green focus:ring-1 focus:ring-geeks-green outline-none transition',
                 'placeholder': '+998 90 123 45 67'
             }),
         }
@@ -47,7 +47,9 @@ class StudentInfoForm(forms.ModelForm):
 
     def clean_age(self):
         age = self.cleaned_data.get('age')
-        if age and (age < 8 or age > 100):
+        if age is None:
+            raise forms.ValidationError('Yoshni kiriting.')
+        if age < 8 or age > 100:
             raise forms.ValidationError('Yosh 8 dan 100 gacha bo\'lishi kerak.')
         return age
 
@@ -56,4 +58,8 @@ class StudentInfoForm(forms.ModelForm):
         digits = ''.join(c for c in phone if c.isdigit())
         if len(digits) < 9:
             raise forms.ValidationError('To\'g\'ri telefon raqamini kiriting.')
-        return phone
+        if digits.startswith('998') and len(digits) >= 12:
+            return '+' + digits[:12]
+        if len(digits) == 9:
+            return '+998' + digits
+        return '+998' + digits[-9:] if len(digits) > 9 else phone

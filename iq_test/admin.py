@@ -41,7 +41,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(UserResult)
 class UserResultAdmin(admin.ModelAdmin):
-    list_display = ['name', 'age', 'gender', 'score', 'created_at']
+    list_display = ['name', 'age', 'gender', 'score', 'correct_count', 'total_questions', 'created_at']
     list_filter = ['gender', 'created_at']
     search_fields = ['name', 'phone']
     readonly_fields = ['created_at']

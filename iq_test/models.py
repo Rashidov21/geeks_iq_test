@@ -100,6 +100,8 @@ class UserResult(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name='Jinsi')
     phone = models.CharField(max_length=20, verbose_name='Telefon')
     score = models.IntegerField(verbose_name='Ball')
+    correct_count = models.PositiveIntegerField(default=0, verbose_name='To\'g\'ri javoblar')
+    total_questions = models.PositiveIntegerField(default=0, verbose_name='Jami savollar')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

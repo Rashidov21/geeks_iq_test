@@ -11,11 +11,16 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#059669',
-                        primary-dark: '#047857',
+                        'geeks-dark': '#0f0f12',
+                        'geeks-darker': '#0a0a0c',
+                        'geeks-green': '#00FF8C',
+                        'geeks-purple': '#A08CFF',
+                        'geeks-yellow': '#FFDB00',
+                        'geeks-orange': '#FF9500',
+                        'geeks-gray': '#6b7280',
                     }
                 }
             }
@@ -23,19 +28,19 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', system-ui, sans-serif; }
+        body { font-family: 'Space Grotesk', system-ui, sans-serif; }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-geeks-dark text-white min-h-screen flex flex-col">
     {% block header %}
-    <header class="py-3 px-4 bg-white border-b border-slate-200 shrink-0">
-        <div class="container mx-auto">
-            <a href="{% url 'iq_test:landing' %}" class="flex items-center gap-2 w-fit">
-                <img src="{% static 'logo_2 (6).png' %}" alt="Geeks Andijan" class="h-8 w-auto">
-                <span class="font-bold text-slate-700">Geeks Andijan</span>
+    <header class="py-3 px-4 bg-geeks-darker border-b border-white/10 shrink-0">
+        <div class="container mx-auto flex justify-center items-center">
+            <a href="{% url 'iq_test:landing' %}" class="flex items-center gap-2 w-fit hover:opacity-90 transition-opacity">
+                <img src="{% static 'logo_white_2 (6).png' %}" alt="Geeks Andijan" class="h-8 w-auto">
+                <span class="font-bold text-white text-sm uppercase tracking-wide">Geeks Andijan</span>
             </a>
         </div>
     </header>
