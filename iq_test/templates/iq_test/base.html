@@ -5,6 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Geeks Andijan IQ Test{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'logo_white_2 (6).png' %}" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="{% static 'logo_white_2 (6).png' %}">
+
+    <!-- SEO Meta -->
+    <meta name="description" content="{% block meta_description %}Geeks Andijan IQ Test — mantiqiy fikrlash va aql darajangizni tekshiring. Bepul onlayn IQ test.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}IQ test, Geeks Andijan, mantiq test, aql test, O'zbekiston, Andijon{% endblock %}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}Geeks Andijan IQ Test{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Geeks Andijan IQ Test — mantiqiy fikrlash va aql darajangizni tekshiring. Bepul onlayn IQ test.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'logo_white_2 (6).png' %}{% endblock %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="uz_UZ">
+    <meta property="og:site_name" content="Geeks Andijan IQ Test">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Geeks Andijan IQ Test{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Geeks Andijan IQ Test — mantiqiy fikrlash va aql darajangizni tekshiring. Bepul onlayn IQ test.{% endblock %}">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
