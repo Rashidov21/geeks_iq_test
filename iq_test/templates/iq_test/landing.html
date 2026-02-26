@@ -17,16 +17,15 @@
         </a>
     </nav>
 
-    <div class="container mx-auto px-4 py-12 md:py-20 text-center">
-        <h1 class="font-bold text-2xl md:text-4xl mb-6 leading-tight">
-            <span class="inline-block bg-geeks-green text-geeks-dark px-4 py-2 rounded-lg mb-2">GEEKS ANDIJAN</span><br>
+    <div class="container mx-auto px-3 sm:px-4 py-8 sm:py-12 md:py-20 text-center">
+        <h1 class="font-bold text-2xl md:text-4xl mb-4 sm:mb-6 leading-tight">
             <span class="inline-block bg-geeks-purple text-white px-4 py-2 rounded-lg mb-2">IQ TEST</span><br>
             <span class="inline-block bg-geeks-yellow text-geeks-dark px-4 py-2 rounded-lg">BILIMINGIZNI SINANG!</span>
         </h1>
-        <p class="text-geeks-gray text-lg md:text-xl max-w-2xl mx-auto mb-6">
+        <p class="text-geeks-gray text-lg md:text-xl max-w-2xl mx-auto mb-4 sm:mb-6">
             Aql darajangizni bir necha daqiqada tekshiring — matnli savollar, Raven va visual puzzle'lar
         </p>
-        <div class="flex flex-wrap justify-center gap-4 mb-8 text-geeks-gray">
+        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8 text-geeks-gray">
             <a href="https://t.me/geeks_andijan" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-geeks-green transition-colors" aria-label="Telegram">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                 <span class="hidden sm:inline">Telegram</span>
@@ -45,7 +44,7 @@
             </a>
         </div>
         <a href="{% url 'iq_test:student_info' %}" 
-           class="inline-flex items-center gap-2 bg-geeks-purple text-white px-8 py-4 rounded-lg font-bold text-lg hover:opacity-90 transition-opacity uppercase">
+           class="inline-flex items-center gap-2 bg-geeks-purple text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-lg hover:opacity-90 transition-opacity uppercase">
             IQ Testni Boshlash
         </a>
     </div>
@@ -55,10 +54,10 @@
 {% block content %}
 <div class="min-h-screen flex flex-col">
     <!-- Statistika -->
-    <section class="py-12 px-4 border-b border-white/10">
+    <section class="py-6 sm:py-8 md:py-12 px-3 sm:px-4 border-b border-white/10">
         <div class="container mx-auto max-w-4xl">
-            <h2 class="text-xl font-bold text-center text-white mb-8">Platforma statistikasi</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <h2 class="text-xl font-bold text-center text-white mb-4 sm:mb-6 md:mb-8">Platforma statistikasi</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
                 <div class="bg-white/5 rounded-lg p-4 text-center border border-white/10">
                     <p class="text-3xl font-bold text-geeks-green">{{ total_attempts }}</p>
                     <p class="text-geeks-gray text-sm mt-1">Jami testlar</p>
@@ -96,35 +95,35 @@
     </section>
 
     <!-- Steps -->
-    <section class="container mx-auto px-4 py-16 md:py-20">
-        <h2 class="text-2xl font-bold text-center text-white mb-12">Qanday ishlaydi?</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-white/5 rounded-lg p-8 border border-white/10 text-center">
-                <div class="w-16 h-16 bg-geeks-green/20 rounded flex items-center justify-center mx-auto mb-4" style="image-rendering: pixelated;">
-                    <svg class="w-10 h-10 text-geeks-green" viewBox="0 0 32 32" fill="currentColor"><rect x="8" y="4" width="4" height="4"/><rect x="20" y="4" width="4" height="4"/><rect x="4" y="12" width="4" height="4"/><rect x="12" y="12" width="8" height="4"/><rect x="24" y="12" width="4" height="4"/><rect x="4" y="20" width="4" height="4"/><rect x="12" y="20" width="8" height="4"/><rect x="24" y="20" width="4" height="4"/></svg>
+    <section class="container mx-auto px-3 sm:px-4 py-8 sm:py-12 md:py-16 lg:py-20">
+        <h2 class="text-2xl font-bold text-center text-white mb-6 sm:mb-8 md:mb-12">Qanday ishlaydi?</h2>
+        <div class="grid md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div class="bg-white/5 rounded-lg p-4 sm:p-6 md:p-8 border border-white/10 text-center">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-geeks-green/20 rounded flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <span class="text-3xl sm:text-4xl">📝</span>
                 </div>
                 <h3 class="font-bold text-lg mb-2 text-geeks-green">Ma'lumotlaringizni kiriting</h3>
-                <p class="text-geeks-gray">Ism, yosh, jinsi va telefon. Ro'yxatdan o'tish shart emas.</p>
+                <p class="text-geeks-gray text-sm sm:text-base">Ism, yosh va telefon. Ro'yxatdan o'tish shart emas.</p>
             </div>
-            <div class="bg-white/5 rounded-lg p-8 border border-white/10 text-center">
-                <div class="w-16 h-16 bg-geeks-purple/20 rounded flex items-center justify-center mx-auto mb-4" style="image-rendering: pixelated;">
-                    <svg class="w-10 h-10 text-geeks-purple" viewBox="0 0 32 32" fill="currentColor"><rect x="6" y="4" width="20" height="4"/><rect x="6" y="10" width="4" height="4"/><rect x="12" y="10" width="8" height="4"/><rect x="22" y="10" width="4" height="4"/><rect x="6" y="16" width="4" height="4"/><rect x="12" y="16" width="8" height="4"/><rect x="22" y="16" width="4" height="4"/><rect x="6" y="22" width="4" height="4"/><rect x="12" y="22" width="8" height="4"/><rect x="22" y="22" width="4" height="4"/></svg>
+            <div class="bg-white/5 rounded-lg p-4 sm:p-6 md:p-8 border border-white/10 text-center">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-geeks-purple/20 rounded flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <span class="text-3xl sm:text-4xl">📊</span>
                 </div>
                 <h3 class="font-bold text-lg mb-2 text-geeks-purple">Savollarga javob bering</h3>
-                <p class="text-geeks-gray">Matnli savollar, Raven, abstract reasoning va visual puzzlelar.</p>
+                <p class="text-geeks-gray text-sm sm:text-base">Matnli savollar, Raven, abstract reasoning va visual puzzlelar.</p>
             </div>
-            <div class="bg-white/5 rounded-lg p-8 border border-white/10 text-center">
-                <div class="w-16 h-16 bg-geeks-yellow/20 rounded flex items-center justify-center mx-auto mb-4" style="image-rendering: pixelated;">
-                    <svg class="w-10 h-10 text-geeks-yellow" viewBox="0 0 32 32" fill="currentColor"><rect x="14" y="4" width="4" height="4"/><rect x="10" y="8" width="4" height="4"/><rect x="18" y="8" width="4" height="4"/><rect x="6" y="12" width="4" height="4"/><rect x="14" y="12" width="4" height="4"/><rect x="22" y="12" width="4" height="4"/><rect x="6" y="16" width="20" height="4"/><rect x="6" y="22" width="4" height="4"/><rect x="14" y="22" width="4" height="4"/><rect x="22" y="22" width="4" height="4"/></svg>
+            <div class="bg-white/5 rounded-lg p-4 sm:p-6 md:p-8 border border-white/10 text-center">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-geeks-yellow/20 rounded flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <span class="text-3xl sm:text-4xl">🏆</span>
                 </div>
                 <h3 class="font-bold text-lg mb-2 text-geeks-yellow">Natijangizni oling</h3>
-                <p class="text-geeks-gray">IQ ballingiz va nishonni ko'ring. Reytingda o'ringizni tekshiring!</p>
+                <p class="text-geeks-gray text-sm sm:text-base">IQ ballingiz va nishonni ko'ring. Reytingda o'ringizni tekshiring!</p>
             </div>
         </div>
 
-        <div class="text-center mt-16">
+        <div class="text-center mt-8 sm:mt-12 md:mt-16">
             <a href="{% url 'iq_test:student_info' %}" 
-               class="inline-flex items-center gap-2 bg-geeks-green text-geeks-dark px-8 py-4 rounded-lg font-bold hover:opacity-90 transition-opacity uppercase">
+               class="inline-flex items-center gap-2 bg-geeks-green text-geeks-dark px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold hover:opacity-90 transition-opacity uppercase">
                 Hozir boshlash
             </a>
         </div>

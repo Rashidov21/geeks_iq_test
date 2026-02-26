@@ -3,13 +3,13 @@
 {% block title %}IQ Test - Geeks Andijan{% endblock %}
 
 {% block content %}
-<div id="test-container" class="min-h-screen py-6 px-4">
+<div id="test-container" class="min-h-screen py-4 px-3 sm:py-6 sm:px-4" data-results-url="{% url 'iq_test:results' %}">
     <!-- Header with progress and timer -->
-    <div class="max-w-2xl mx-auto mb-6">
-        <div class="flex justify-between items-center mb-2">
+    <div class="max-w-2xl mx-auto mb-4 sm:mb-6">
+        <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
             <span id="progress-text" class="font-medium text-geeks-gray">Savol 1 / <span id="total-questions">0</span></span>
             <div class="flex items-center gap-2 bg-geeks-yellow/20 px-3 py-1.5 rounded-lg border border-geeks-yellow/30">
-                <svg class="w-5 h-5 text-geeks-yellow" viewBox="0 0 24 24" fill="currentColor" style="image-rendering: pixelated;"><rect x="10" y="2" width="4" height="2"/><rect x="10" y="20" width="4" height="2"/><rect x="2" y="10" width="2" height="4"/><rect x="20" y="10" width="2" height="4"/><rect x="4" y="4" width="2" height="2"/><rect x="18" y="4" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="11" y="6" width="2" height="6"/><rect x="13" y="10" width="6" height="2"/></svg>
+                <span class="text-geeks-yellow text-lg">⏱️</span>
                 <span id="timer" class="font-bold text-geeks-yellow">2:00</span>
             </div>
         </div>
@@ -20,7 +20,7 @@
 
     <!-- Question card -->
     <div id="question-card" class="max-w-2xl mx-auto bg-white/5 rounded-lg border border-white/10 overflow-hidden">
-        <div id="question-content" class="p-8">
+        <div id="question-content" class="p-4 sm:p-6 md:p-8">
             <!-- Loading state -->
             <div id="loading" class="text-center py-16">
                 <div class="inline-block w-12 h-12 border-4 border-geeks-green border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -30,13 +30,13 @@
             <!-- Question (populated by JS) -->
             <div id="question-area" class="hidden">
                 <p id="question-type-badge" class="text-xs font-medium text-geeks-gray mb-2"></p>
-                <h2 id="question-text" class="text-xl font-bold text-white mb-4"></h2>
-                <div id="question-image-wrap" class="mb-6 hidden">
-                    <img id="question-image" src="" alt="" class="max-w-full rounded-lg border border-white/10 mx-auto" style="max-height: 280px;">
+                <h2 id="question-text" class="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4"></h2>
+                <div id="question-image-wrap" class="mb-4 sm:mb-6 hidden">
+                    <img id="question-image" src="" alt="" class="max-w-full rounded-lg border border-white/10 mx-auto max-h-[200px] sm:max-h-[280px] object-contain">
                 </div>
-                <div id="options" class="space-y-3"></div>
-                <div class="flex gap-3 mt-6">
-                    <button type="button" id="skip-btn" class="px-4 py-2 border-2 border-white/20 rounded-lg font-medium text-geeks-gray hover:bg-white/5 transition-colors">
+                <div id="options" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                <div class="flex gap-3 mt-4 sm:mt-6">
+                    <button type="button" id="skip-btn" class="min-h-[44px] px-4 py-2.5 border-2 border-white/20 rounded-lg font-medium text-geeks-gray hover:bg-white/5 transition-colors touch-manipulation">
                         O'tkazib yuborish →
                     </button>
                 </div>
@@ -45,19 +45,19 @@
     </div>
 
     <!-- Navigation -->
-    <div id="nav-buttons" class="max-w-2xl mx-auto mt-6 flex justify-between hidden">
-        <button type="button" id="prev-btn" class="px-6 py-2 border-2 border-white/20 rounded-lg font-medium text-white hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors">
+    <div id="nav-buttons" class="max-w-2xl mx-auto mt-4 sm:mt-6 flex justify-between gap-3 hidden">
+        <button type="button" id="prev-btn" class="min-h-[44px] flex-1 sm:flex-none px-4 sm:px-6 py-2.5 border-2 border-white/20 rounded-lg font-medium text-white hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors touch-manipulation">
             ← Oldingi
         </button>
-        <button type="button" id="next-btn" class="px-6 py-2 bg-geeks-purple text-white rounded-lg font-bold hover:opacity-90 transition-opacity">
+        <button type="button" id="next-btn" class="min-h-[44px] flex-1 sm:flex-none px-4 sm:px-6 py-2.5 bg-geeks-purple text-white rounded-lg font-bold hover:opacity-90 transition-opacity touch-manipulation">
             Keyingi →
         </button>
     </div>
 
     <!-- Submit area -->
-    <div id="submit-area" class="max-w-2xl mx-auto mt-8 text-center hidden">
+    <div id="submit-area" class="max-w-2xl mx-auto mt-6 sm:mt-8 text-center hidden">
         <div id="submit-error" class="mb-4 hidden p-4 bg-red-500/20 border border-red-500/50 text-red-400 rounded-lg text-sm"></div>
-        <button type="button" id="submit-btn" class="px-12 py-4 bg-geeks-green text-geeks-dark font-bold text-lg rounded-lg hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed uppercase">
+        <button type="button" id="submit-btn" class="min-h-[48px] w-full sm:w-auto px-8 sm:px-12 py-4 bg-geeks-green text-geeks-dark font-bold text-lg rounded-lg hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed uppercase touch-manipulation">
             Natijani ko'rish
         </button>
     </div>
@@ -144,19 +144,20 @@
             const letter = opt.letter;
             const isSelected = answers[q.id] === letter;
             const div = document.createElement('label');
-            div.className = `flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all min-h-[48px] text-white ${isSelected ? 'border-geeks-green bg-geeks-green/20' : 'border-white/20 hover:border-white/40 bg-white/5'}`;
+            div.className = `flex items-center gap-3 p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-all min-h-[52px] sm:min-h-[56px] text-white touch-manipulation ${isSelected ? 'border-geeks-green bg-geeks-green/20' : 'border-white/20 hover:border-white/40 bg-white/5'}`;
             div.innerHTML = `<input type="radio" name="answer" value="${letter}" ${isSelected ? 'checked' : ''} class="w-5 h-5 text-geeks-green shrink-0">
                 <span class="font-medium shrink-0">${letter.toUpperCase()}.</span>`;
             if (opt.image) {
                 const img = document.createElement('img');
                 img.src = opt.image;
                 img.alt = '';
-                img.className = 'w-12 h-12 object-contain rounded border border-white/10';
+                img.className = 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain rounded border border-white/10 shrink-0';
                 div.appendChild(img);
             }
             if (opt.text) {
                 const span = document.createElement('span');
                 span.textContent = opt.text;
+                span.className = 'break-words';
                 div.appendChild(span);
             }
             div.addEventListener('click', () => {
@@ -258,7 +259,8 @@
             const data = await res.json();
             if (data.success) {
                 window.onbeforeunload = null;
-                window.location.href = '/results/';
+                const resultsUrl = document.getElementById('test-container').getAttribute('data-results-url');
+                window.location.href = resultsUrl || '/results/';
             } else {
                 showSubmitError(data.error || 'Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
             }

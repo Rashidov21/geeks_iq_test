@@ -97,7 +97,7 @@ class UserResult(models.Model):
 
     name = models.CharField(max_length=100, verbose_name='Ism')
     age = models.IntegerField(verbose_name='Yosh')
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name='Jinsi')
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M', blank=True, verbose_name='Jinsi')
     phone = models.CharField(max_length=20, verbose_name='Telefon')
     score = models.IntegerField(verbose_name='Ball')
     correct_count = models.PositiveIntegerField(default=0, verbose_name='To\'g\'ri javoblar')

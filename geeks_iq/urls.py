@@ -12,3 +12,6 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'iq_test.views.page_not_found_view'
+handler500 = 'iq_test.views.server_error_view'

@@ -11,7 +11,7 @@ class StudentInfoForm(forms.ModelForm):
 
     class Meta:
         model = UserResult
-        fields = ['name', 'age', 'gender', 'phone']
+        fields = ['name', 'age', 'phone']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-3 rounded-lg bg-white/5 border-2 border-white/20 text-white placeholder-gray-500 focus:border-geeks-green focus:ring-1 focus:ring-geeks-green outline-none transition',
@@ -31,13 +31,8 @@ class StudentInfoForm(forms.ModelForm):
         labels = {
             'name': 'Ism',
             'age': 'Yosh',
-            'gender': 'Jinsi',
             'phone': 'Telefon raqam',
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.RadioSelect(attrs={'class': 'flex gap-4'})
 
     def clean_name(self):
         name = self.cleaned_data.get('name', '').strip()

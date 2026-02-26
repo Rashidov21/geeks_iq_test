@@ -5,15 +5,15 @@
 {% block og_title %}Natijangiz - Geeks Andijan IQ Test{% endblock %}
 
 {% block content %}
-<div class="min-h-screen py-12 px-4">
+<div class="min-h-screen py-6 sm:py-8 md:py-12 px-3 sm:px-4">
     <div class="max-w-lg mx-auto">
         <div class="bg-white/5 rounded-lg border border-white/10 overflow-hidden text-center">
-            <div class="p-8 {% if category == 'high' %}bg-geeks-yellow/20{% elif category == 'average' %}bg-geeks-purple/20{% else %}bg-geeks-orange/20{% endif %} border-b border-white/10">
+            <div class="p-4 sm:p-6 md:p-8 {% if category == 'high' %}bg-geeks-yellow/20{% elif category == 'average' %}bg-geeks-purple/20{% else %}bg-geeks-orange/20{% endif %} border-b border-white/10">
                 <p class="text-6xl mb-2">{{ badge_emoji }}</p>
                 <h1 class="text-2xl font-bold uppercase {% if category == 'high' %}text-geeks-yellow{% elif category == 'average' %}text-geeks-purple{% else %}text-geeks-orange{% endif %}">{{ badge }} nishoni</h1>
                 <p class="text-white/90 mt-1">{{ result.name }}, tabriklaymiz!</p>
             </div>
-            <div class="p-8">
+            <div class="p-4 sm:p-6 md:p-8">
                 <div class="text-6xl font-extrabold text-geeks-green mb-2">{{ result.score }}</div>
                 <p class="text-geeks-gray font-medium">IQ ball</p>
                 {% if result.total_questions > 0 %}
@@ -26,7 +26,7 @@
         </div>
 
         {% if top3 %}
-        <div class="mt-8 bg-white/5 rounded-lg border border-white/10 p-6">
+        <div class="mt-4 sm:mt-6 md:mt-8 bg-white/5 rounded-lg border border-white/10 p-4 sm:p-6">
             <h2 class="font-bold text-white mb-4 flex items-center gap-2">
                 <span class="text-geeks-yellow">★</span>
                 Eng yaxshi 3 ta
@@ -45,7 +45,11 @@
         </div>
         {% endif %}
 
-        <div class="mt-8 flex flex-col gap-3">
+        <div class="mt-4 sm:mt-6 md:mt-8 flex flex-col gap-3">
+            <a href="{% url 'iq_test:certificate' result.id %}" target="_blank"
+               class="w-full py-3 bg-geeks-purple text-white font-bold rounded-lg hover:opacity-90 transition-opacity text-center uppercase">
+                Sertifikatni yuklab olish
+            </a>
             <a href="{% url 'iq_test:student_info' %}" 
                class="w-full py-3 bg-geeks-green text-geeks-dark font-bold rounded-lg hover:opacity-90 transition-opacity text-center uppercase">
                 Qayta topshirish

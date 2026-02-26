@@ -3,9 +3,13 @@ Django settings for Geeks Andijan IQ Test project.
 Educational MVP - Simple, fast, accessible.
 """
 
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env', override=True)
 
 SECRET_KEY = 'django-insecure-geeks-andijan-iq-test-mvp-change-in-production'
 
@@ -81,3 +85,8 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Telegram: register form to'ldirilganda guruhga xabar yuborish
+# Bot token: @BotFather dan olingan. Chat ID: guruh yoki kanal (masalan -1001234567890)
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')

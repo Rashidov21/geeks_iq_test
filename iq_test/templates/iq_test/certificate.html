@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikat - {{ result.name }} - Geeks Andijan IQ Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'geeks-dark': '#0f0f12',
+                        'geeks-green': '#00FF8C',
+                        'geeks-purple': '#A08CFF',
+                        'geeks-yellow': '#FFDB00',
+                        'geeks-orange': '#FF9500',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @page { size: A4 landscape; margin: 12mm; }
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #fff !important; }
+            .no-print { display: none !important; }
+            .certificate-page {
+                width: 297mm !important;
+                min-height: 210mm !important;
+                max-width: 297mm !important;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-geeks-dark text-white min-h-screen flex flex-col items-center justify-center p-4 print:p-0 print:bg-white print:text-black">
+    <div class="certificate-page w-[297mm] min-h-[210mm] max-w-full bg-white text-geeks-dark rounded-xl overflow-hidden border-2 border-geeks-green/30 shadow-xl print:shadow-none print:border print:rounded-none flex flex-col">
+        <!-- Top: logo strip -->
+        <div class="bg-geeks-dark py-4 px-6 flex items-center justify-center gap-4 shrink-0">
+            <img src="{% static 'logo_white_2 (6).png' %}" alt="Geeks Andijan" class="h-12 w-auto print:h-14">
+            <div>
+                <h1 class="text-lg font-bold text-white uppercase tracking-wide print:text-xl">Geeks Andijan</h1>
+                <p class="text-geeks-green text-sm font-medium">IQ Test — Sertifikat</p>
+            </div>
+        </div>
+
+        <!-- Main: content + emoji bezak (IQ va IT) -->
+        <div class="flex-1 flex items-stretch min-h-0">
+            <!-- Chap: IQ ga oid emojilar -->
+            <div class="hidden sm:flex w-20 lg:w-24 flex-col justify-center items-center gap-6 pl-4 print:flex print:pl-6">
+                <span class="text-4xl lg:text-5xl" title="Aql">🧠</span>
+                <span class="text-4xl lg:text-5xl" title="G'oya">💡</span>
+                <span class="text-4xl lg:text-5xl" title="Nishon">🏆</span>
+            </div>
+
+            <div class="flex-1 p-6 sm:p-8 print:p-10 flex flex-col justify-center">
+                <p class="text-center text-xl sm:text-2xl text-gray-600 font-bold uppercase tracking-widest mb-4 print:text-3xl print:text-gray-700">Sertifikat</p>
+                <p class="text-center text-base text-gray-700 leading-relaxed max-w-3xl mx-auto mb-6 print:text-lg">
+                    Geeks Andijan IQ test sinovida muvaffaqiyatli ishtirok etib, yuqori natija qayd etganligi uchun taqdim etiladi.
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-center text-geeks-dark mb-1 print:text-3xl">{{ result.name }}</h2>
+                <p class="text-center text-gray-600 mb-6 print:text-lg">IQ ball: <span class="font-bold text-geeks-green">{{ result.score }}</span> ({{ result.correct_count }} / {{ result.total_questions }} to'g'ri javob)</p>
+
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <span class="text-3xl print:text-4xl">{{ badge_emoji }}</span>
+                    <span class="text-xl font-bold uppercase print:text-2xl">{{ badge }} nishoni</span>
+                </div>
+
+                <p class="text-center text-gray-700 leading-relaxed max-w-3xl mx-auto mb-4 print:text-base">
+                    Mazkur sertifikat egasining mantiqiy fikrlash, tahlil qilish va tezkor qaror qabul qilish qobiliyatlari yuqori ekanligini tasdiqlaydi.
+                </p>
+                <p class="text-center text-gray-700 leading-relaxed max-w-3xl mx-auto mb-6 print:text-base">
+                    Yangi yutuqlar sari dadil qadam tashlashingizni tilaymiz! 🌟
+                </p>
+
+                <p class="text-center text-gray-700 leading-relaxed max-w-3xl mx-auto mb-6 print:text-base italic">
+                    Shuningdek, ushbu yutuqda farzandining ta'lim-tarbiyasiga beqiyos hissa qo'shgan, uni qo'llab-quvvatlab kelayotgan ota-onasiga chuqur minnatdorchilik bildiramiz.
+                </p>
+
+                <p class="text-center text-sm text-gray-500 print:text-base">Sana: {{ result.created_at|date:"d.m.Y" }}</p>
+            </div>
+
+            <!-- O'ng: IT ga oid emojilar -->
+            <div class="hidden sm:flex w-20 lg:w-24 flex-col justify-center items-center gap-6 pr-4 print:flex print:pr-6">
+                <span class="text-4xl lg:text-5xl" title="Kompyuter">💻</span>
+                <span class="text-4xl lg:text-5xl" title="Kod">⌨️</span>
+                <span class="text-4xl lg:text-5xl" title="Maqsad">🎯</span>
+            </div>
+        </div>
+
+        <!-- Bottom: logo strip -->
+        <div class="bg-geeks-dark/5 py-3 px-6 flex items-center justify-center gap-3 border-t border-gray-200 shrink-0">
+            <img src="{% static 'logo_2 (6).png' %}" alt="Geeks Andijan" class="h-8 w-auto print:h-10" onerror="this.style.display='none'">
+            <span class="font-bold text-geeks-dark uppercase text-sm">Geeks Andijan</span>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-500">geeksandijan.uz</span>
+        </div>
+    </div>
+
+    <div class="no-print mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button" onclick="window.print();" class="px-8 py-3 bg-geeks-green text-geeks-dark font-bold rounded-lg hover:opacity-90 transition-opacity uppercase">
+            PDF sifatida yuklab olish
+        </button>
+        <a href="{% url 'iq_test:results_detail' result.id %}" class="px-8 py-3 border-2 border-white/30 text-white font-medium rounded-lg hover:bg-white/10 text-center transition-colors">
+            Natijaga qaytish
+        </a>
+    </div>
+</body>
+</html>

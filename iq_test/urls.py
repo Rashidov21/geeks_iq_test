@@ -16,4 +16,5 @@ urlpatterns = [
     path('api/submit/', views.submit_test, name='submit_test'),
     path('results/', views.results, name='results'),
     path('results/<int:result_id>/', views.results, name='results_detail'),
+    path('certificate/<int:result_id>/', views.certificate, name='certificate'),
 ]

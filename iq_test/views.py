@@ -12,6 +12,7 @@ from django.utils import timezone
 
 from .models import Question, UserResult, TestSession
 from .forms import StudentInfoForm
+from .telegram_utils import send_result_to_telegram
 
 
 # ==================== STUDENT SIDE ====================
@@ -33,13 +34,13 @@ def student_info(request):
     if request.method == 'POST':
         form = StudentInfoForm(request.POST)
         if form.is_valid():
-            # Store in session for use after test
-            request.session['student_info'] = {
+            info = {
                 'name': form.cleaned_data['name'],
                 'age': form.cleaned_data['age'],
-                'gender': form.cleaned_data['gender'],
                 'phone': form.cleaned_data['phone'],
             }
+            # Store in session for use after test
+            request.session['student_info'] = info
             return redirect('iq_test:start_test')
     else:
         form = StudentInfoForm()
@@ -114,7 +115,7 @@ def submit_test(request):
     result = UserResult.objects.create(
         name=info['name'],
         age=info['age'],
-        gender=info['gender'],
+        gender=info.get('gender', 'M'),
         phone=info['phone'],
         score=score,
         correct_count=correct,
@@ -127,6 +128,9 @@ def submit_test(request):
         finished_at=timezone.now(),
         time_spent=time_spent
     )
+
+    # Telegram guruhiga natija yuborish (ism, yosh, telefon, ball)
+    send_result_to_telegram(info, result)
 
     # Store result id for results page
     request.session['last_result_id'] = result.id
@@ -176,5 +180,42 @@ def results(request, result_id=None):
         'message': message,
         'top3': top3,
     })
+
+
+def certificate(request, result_id):
+    """Certificate page — print/save as PDF (no server-side file)."""
+    result = get_object_or_404(UserResult, id=result_id)
+
+    if result.score < 40:
+        badge = 'Bronza'
+        badge_emoji = '🥉'
+        message = 'Siz Geeks Andijan IQ testida qatnashdingiz. Yaxshilab mashq qiling — keyingi safar yanada yaxshi natija sizni kutadi!'
+    elif result.score < 70:
+        badge = 'Kumush'
+        badge_emoji = '🥈'
+        message = 'Siz Geeks Andijan IQ testida yaxshi natija ko\'rsatdingiz. Davom eting — sizning potensialingiz katta!'
+    else:
+        badge = 'Oltin'
+        badge_emoji = '🥇'
+        message = 'Siz Geeks Andijan IQ testida a\'lo natija ko\'rsatdingiz. Mantiqiy fikrlash qobiliyatingiz bilan davom eting!'
+
+    return render(request, 'iq_test/certificate.html', {
+        'result': result,
+        'badge': badge,
+        'badge_emoji': badge_emoji,
+        'message': message,
+    })
+
+
+# ==================== ERROR PAGES ====================
+
+def page_not_found_view(request, exception=None):
+    """404 — sahifa topilmadi."""
+    return render(request, 'iq_test/404.html', status=404)
+
+
+def server_error_view(request):
+    """500 — server xatosi."""
+    return render(request, 'iq_test/500.html', status=500)
 
 
