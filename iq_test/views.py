@@ -186,11 +186,21 @@ def certificate(request, result_id):
     """Certificate page — print/save as PDF (no server-side file)."""
     result = get_object_or_404(UserResult, id=result_id)
 
-    if result.score < 40:
+    score = result.score
+
+    # Discount percentage for Geeks Andijan Computer Science course
+    if score < 30:
+        discount_percent = 30
+    elif score < 70:
+        discount_percent = 50
+    else:
+        discount_percent = 100
+
+    if score < 40:
         badge = 'Bronza'
         badge_emoji = '🥉'
         message = 'Siz Geeks Andijan IQ testida qatnashdingiz. Yaxshilab mashq qiling — keyingi safar yanada yaxshi natija sizni kutadi!'
-    elif result.score < 70:
+    elif score < 70:
         badge = 'Kumush'
         badge_emoji = '🥈'
         message = 'Siz Geeks Andijan IQ testida yaxshi natija ko\'rsatdingiz. Davom eting — sizning potensialingiz katta!'
@@ -204,6 +214,7 @@ def certificate(request, result_id):
         'badge': badge,
         'badge_emoji': badge_emoji,
         'message': message,
+        'discount_percent': discount_percent,
     })
 
 
