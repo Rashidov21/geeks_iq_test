@@ -63,11 +63,8 @@
         </div>
     </div>
 
-    <!-- Navigation -->
-    <div id="nav-buttons" class="max-w-2xl mx-auto mt-4 sm:mt-6 flex justify-between gap-3 hidden">
-        <button type="button" id="prev-btn" class="min-h-[44px] flex-1 sm:flex-none px-4 sm:px-6 py-2.5 border-2 border-white/20 rounded-lg font-medium text-white hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors touch-manipulation">
-            ← Oldingi
-        </button>
+    <!-- Navigation (faqat Keyingi — orqaga qaytish anti-cheat uchun o‘chirilgan) -->
+    <div id="nav-buttons" class="max-w-2xl mx-auto mt-4 sm:mt-6 flex justify-end gap-3 hidden">
         <button type="button" id="next-btn" class="min-h-[44px] flex-1 sm:flex-none px-4 sm:px-6 py-2.5 bg-geeks-purple text-white rounded-lg font-bold hover:opacity-90 transition-opacity touch-manipulation">
             Keyingi →
         </button>
@@ -106,7 +103,6 @@
     const totalQuestionsEl = document.getElementById('total-questions');
     const timerEl = document.getElementById('timer');
     const skipBtn = document.getElementById('skip-btn');
-    const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const submitArea = document.getElementById('submit-area');
     const submitBtn = document.getElementById('submit-btn');
@@ -193,8 +189,7 @@
         progressText.innerHTML = `Savol ${currentIndex + 1} / <span id="total-questions">${questions.length}</span>`;
 
         // Nav visibility
-        prevBtn.parentElement.classList.remove('hidden');
-        prevBtn.disabled = currentIndex === 0;
+        nextBtn.parentElement.classList.remove('hidden');
         nextBtn.textContent = currentIndex === questions.length - 1 ? 'Yakunlash' : 'Keyingi →';
         submitArea.classList.add('hidden');
         if (currentIndex === questions.length - 1) {
@@ -211,14 +206,6 @@
         stopTimer();
         if (currentIndex < questions.length - 1) {
             currentIndex++;
-            renderQuestion();
-        }
-    }
-
-    function goPrev() {
-        stopTimer();
-        if (currentIndex > 0) {
-            currentIndex--;
             renderQuestion();
         }
     }
@@ -242,7 +229,6 @@
     }
 
     skipBtn.addEventListener('click', goNext);
-    prevBtn.addEventListener('click', goPrev);
     nextBtn.addEventListener('click', () => {
         if (currentIndex === questions.length - 1) {
             submitTest();
