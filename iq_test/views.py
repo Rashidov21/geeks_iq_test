@@ -110,17 +110,40 @@ def submit_test(request):
     # Score: 0-100 based on correct/total (skipped = wrong)
     score = round((correct / total * 100)) if total > 0 else 0
 
-    # Save result
+    # Save or update result for this phone number
     info = request.session['student_info']
-    result = UserResult.objects.create(
-        name=info['name'],
-        age=info['age'],
-        gender=info.get('gender', 'M'),
-        phone=info['phone'],
-        score=score,
-        correct_count=correct,
-        total_questions=total,
-    )
+    phone = info['phone']
+
+    # If this phone has taken the test before, update their latest result
+    existing_result = UserResult.objects.filter(phone=phone).order_by('-created_at').first()
+    if existing_result:
+        existing_result.name = info['name']
+        existing_result.age = info['age']
+        existing_result.gender = info.get('gender', existing_result.gender or 'M')
+        existing_result.score = score
+        existing_result.correct_count = correct
+        existing_result.total_questions = total
+        existing_result.created_at = timezone.now()
+        existing_result.save(update_fields=[
+            'name',
+            'age',
+            'gender',
+            'score',
+            'correct_count',
+            'total_questions',
+            'created_at',
+        ])
+        result = existing_result
+    else:
+        result = UserResult.objects.create(
+            name=info['name'],
+            age=info['age'],
+            gender=info.get('gender', 'M'),
+            phone=phone,
+            score=score,
+            correct_count=correct,
+            total_questions=total,
+        )
 
     # Optional: create TestSession
     TestSession.objects.create(
